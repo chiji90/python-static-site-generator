@@ -5,14 +5,14 @@ from collections.abc import Mapping
 
 class Content(Mapping):
 
-    __delimeter = "^(?:-|\+){3}\s*$"
+    __delimiter = "^(?:-|\+){3}\s*$"
 
-    __regex = re.compile(__delimeter, re.MULTILINE)
+    __regex = re.compile(__delimiter, re.MULTILINE)
 
     @classmethod
     def load(self, cls, string):
-        _, fm, content = __regex.split(string,2)
-        load(fm, Loader=FullLoader)
+        _, fm, content = cls.__regex.split(string,2)
+        metadata= load(fm, Loader=FullLoader)
         return cls(metadata, content)
     
     def __init__(self,metadata,content):
@@ -30,11 +30,11 @@ class Content(Mapping):
     
     @type.setter
     def type(self,type):
-        set.data["type"] = type
+        self.data["type"] = type
 
 
-    def __getitem__(self, item):
-        return self.data["item"]
+    def __getitem__(self, key):
+        return self.data[key]
 
     def __iter__(self):
         self.data.__iter__()
